@@ -70,4 +70,5 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 
+    implementation("io.github.sceneview:sceneview:2.1.1")
 }
