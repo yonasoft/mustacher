@@ -17,8 +17,11 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,12 +29,31 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.google.ar.core.CameraConfig
+import com.google.ar.core.CameraConfigFilter
+import com.google.ar.core.Config
+import com.google.ar.core.Frame
 import com.yonasoft.mustacher.R
+import io.github.sceneview.SceneView
+import io.github.sceneview.ar.ARScene
+import io.github.sceneview.ar.arcore.createAnchorOrNull
+import io.github.sceneview.ar.arcore.isValid
+import io.github.sceneview.ar.node.AnchorNode
+import io.github.sceneview.math.Position
+import io.github.sceneview.model.ModelInstance
+import io.github.sceneview.node.ModelNode
+import io.github.sceneview.node.Node
+import io.github.sceneview.rememberEngine
+import io.github.sceneview.rememberModelLoader
+import io.github.sceneview.rememberNodes
+import io.github.sceneview.rememberOnGestureListener
 
 @Composable
 fun RecordingScreen() {
+    val context =
 
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -44,9 +66,9 @@ fun RecordingScreen() {
 @Composable
 fun MustacheMenu(
     modifier: Modifier = Modifier,
-    color: Color = Color.Black,
     ) {
 
+    val context = LocalContext.current
     val items = listOf(
         Mustache(0, R.drawable.m1),
         Mustache(1, R.drawable.m2),
@@ -77,15 +99,16 @@ fun MustacheMenu(
         IconButton(onClick = {
             currentIndex = (currentIndex - 1 + items.size) % items.size
         }) {
-            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "previous")
+            Icon(imageVector = Icons.Default.ArrowBack, contentDescription = "previous", tint = Color.LightGray)
         }
 
         CircularImage(imageId = currentMustache.imageId)
 
-        IconButton(onClick = {
+        IconButton(
+            onClick = {
             currentIndex = (currentIndex + 1 + items.size) % items.size
         }) {
-            Icon(imageVector = Icons.Default.ArrowForward, contentDescription = "forward")
+            Icon(imageVector = Icons.Default.ArrowForward, contentDescription = "forward", tint = Color.LightGray)
         }
     }
 }
@@ -117,6 +140,7 @@ fun CircularImage(
 
 @Composable
 fun ARArea(){
+
 
 }
 data class Mustache(var id: Int, var imageId: Int)

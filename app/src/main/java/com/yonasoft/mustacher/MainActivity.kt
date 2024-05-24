@@ -15,7 +15,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import com.yonasoft.mustacher.presentation.components.bottom_nav_bar.BottomNavBar
 import com.yonasoft.mustacher.presentation.screens.gallery_screen.GalleryScreen
 import com.yonasoft.mustacher.presentation.screens.recording_screen.RecordingScreen
 import com.yonasoft.mustacher.ui.theme.MustacherTheme
@@ -38,32 +37,20 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MustacherApp (
+fun MustacherApp(
 ) {
 
-    var selectedItemIndex by rememberSaveable {
-        mutableIntStateOf(0)
-    }
-
     Scaffold(
-        bottomBar = {
-            BottomNavBar(selectedItemIndex = selectedItemIndex) { index ->
-                selectedItemIndex = index
-            }
-        },
-    ){
-        Box(modifier = Modifier
+        modifier = Modifier
             .fillMaxSize()
-            .padding(it)) {
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
 
-            when (selectedItemIndex) {
-                0 -> {
-                    RecordingScreen()
-                }
-                1 -> {
-                    GalleryScreen()
-                }
-            }
+            RecordingScreen()
         }
     }
- }
+}
